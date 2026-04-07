@@ -87,19 +87,13 @@ a {
 }
 
 .loader-icon {
-  font-size: 3rem;
-  color: var(--accent);
   animation: loaderPulse 1.2s ease-in-out infinite;
 }
 
-.loader-text {
-  display: block;
-  margin-top: 16px;
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: 6px;
-  color: var(--text-primary);
+.loader-logo {
+  height: 60px;
+  width: auto;
+  filter: invert(1);
 }
 
 @keyframes loaderPulse {
@@ -140,17 +134,17 @@ a {
 .nav-logo {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 700;
-  letter-spacing: 3px;
-  color: var(--text-primary);
 }
 
-.nav-logo i {
-  color: var(--accent);
-  font-size: 1.6rem;
+.nav-logo-img {
+  height: 40px;
+  width: auto;
+  filter: invert(1);
+  transition: var(--transition);
+}
+
+.nav-logo:hover .nav-logo-img {
+  opacity: 0.85;
 }
 
 .nav-links {
@@ -1370,17 +1364,13 @@ a {
 .footer-logo {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  font-weight: 700;
-  letter-spacing: 3px;
-  color: var(--text-primary);
   margin-bottom: 16px;
 }
 
-.footer-logo i {
-  color: var(--accent);
+.footer-logo-img {
+  height: 45px;
+  width: auto;
+  filter: invert(1);
 }
 
 .footer-brand p {
