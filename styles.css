@@ -1577,6 +1577,20 @@ video.hero-img {
   color: var(--text-muted);
 }
 
+.footer-credit {
+  margin-top: 8px;
+  font-size: 0.78rem;
+}
+
+.footer-credit a {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.footer-credit a:hover {
+  color: var(--accent-light);
+}
+
 /* ==========================================
    LIGHTBOX
    ========================================== */
