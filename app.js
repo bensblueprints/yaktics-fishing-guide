@@ -278,7 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
           link.classList.remove('active');
           if (link.getAttribute('href') === '#' + id) {
             link.classList.add('active');
-            link.style.color = '#d4a853';
+            link.style.color = '#00d9d9';
           } else {
             link.style.color = '';
           }

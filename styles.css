@@ -7,14 +7,14 @@
   --bg-card: #111827;
   --bg-card-hover: #1a2332;
   --bg-surface: #0f1520;
-  --accent: #d4a853;
-  --accent-light: #e8c478;
-  --accent-dark: #b8922f;
+  --accent: #00d9d9;
+  --accent-light: #33f0f0;
+  --accent-dark: #00a8a8;
   --text-primary: #f1f5f9;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
   --border: rgba(255,255,255,0.06);
-  --border-accent: rgba(212,168,83,0.3);
+  --border-accent: rgba(0,217,217,0.3);
   --shadow: 0 4px 30px rgba(0,0,0,0.4);
   --shadow-lg: 0 20px 60px rgba(0,0,0,0.5);
   --radius: 16px;
@@ -209,7 +209,7 @@ a {
 .nav-cta:hover {
   background: var(--accent-light);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(212, 168, 83, 0.3);
+  box-shadow: 0 8px 25px rgba(0, 217, 217, 0.3);
 }
 
 .nav-toggle {
@@ -365,7 +365,7 @@ video.hero-img {
   color: var(--accent);
   margin-bottom: 28px;
   backdrop-filter: blur(10px);
-  background: rgba(212, 168, 83, 0.05);
+  background: rgba(0, 217, 217, 0.05);
 }
 
 .hero h1 {
@@ -419,7 +419,7 @@ video.hero-img {
 .btn-primary:hover {
   background: var(--accent-light);
   transform: translateY(-3px);
-  box-shadow: 0 12px 35px rgba(212, 168, 83, 0.35);
+  box-shadow: 0 12px 35px rgba(0, 217, 217, 0.35);
 }
 
 .btn-outline {
@@ -477,6 +477,24 @@ video.hero-img {
 /* ==========================================
    STATS BAR
    ========================================== */
+.wave-bg {
+  position: relative;
+}
+
+.wave-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('wave-pattern.webp') repeat center / 600px auto;
+  opacity: 0.06;
+  pointer-events: none;
+}
+
+.wave-bg > * {
+  position: relative;
+  z-index: 1;
+}
+
 .stats-bar {
   background: var(--bg-card);
   border-top: 1px solid var(--border);
@@ -841,7 +859,7 @@ video.hero-img {
 
 .rental-option.highlighted {
   border: 1px solid var(--border-accent);
-  background: rgba(212, 168, 83, 0.05);
+  background: rgba(0, 217, 217, 0.05);
 }
 
 .rental-label {
@@ -1127,7 +1145,7 @@ video.hero-img {
   font-size: 0.75rem;
   font-weight: 600;
   color: var(--accent);
-  background: rgba(212, 168, 83, 0.1);
+  background: rgba(0, 217, 217, 0.1);
   padding: 4px 12px;
   border-radius: 50px;
   letter-spacing: 0.5px;
@@ -1412,7 +1430,7 @@ video.hero-img {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(212, 168, 83, 0.1);
+  background: rgba(0, 217, 217, 0.1);
   border-radius: 50%;
   color: var(--accent);
   font-size: 1.2rem;
