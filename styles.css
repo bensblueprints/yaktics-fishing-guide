@@ -331,6 +331,10 @@ a {
   transform: scale(1.1);
 }
 
+video.hero-img {
+  transform: none;
+}
+
 .hero-overlay {
   position: absolute;
   inset: 0;
