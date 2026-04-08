@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Yaktics LLC Bookings</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --bg: #0a0e17;
+      --bg-card: #111827;
+      --bg-surface: #0f1520;
+      --accent: #d4a853;
+      --accent-light: #e8c478;
+      --text: #f1f5f9;
+      --text-sec: #94a3b8;
+      --text-muted: #64748b;
+      --border: rgba(255,255,255,0.06);
+      --green: #4ade80;
+      --red: #f87171;
+      --yellow: #fbbf24;
+      --blue: #60a5fa;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* LOGIN */
+    .login-page {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .login-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+    }
+
+    .login-card h1 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .login-card h1 span { color: var(--accent); }
+
+    .login-card p {
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      font-size: 0.9rem;
+    }
+
+    .login-card input {
+      width: 100%;
+      padding: 14px 18px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 1rem;
+      outline: none;
+      margin-bottom: 16px;
+      transition: border-color 0.3s;
+    }
+
+    .login-card input:focus { border-color: var(--accent); }
+
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--accent);
+      color: #0a0e17;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .login-btn:hover { background: var(--accent-light); }
+
+    .login-error {
+      color: var(--red);
+      font-size: 0.85rem;
+      margin-top: 12px;
+      display: none;
+    }
+
+    /* DASHBOARD */
+    .dashboard { display: none; }
+
+    .dash-header {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .dash-header h1 {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .dash-header h1 span { color: var(--accent); }
+
+    .dash-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .dash-btn {
+      padding: 8px 16px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-sec);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .dash-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .dash-btn.danger:hover {
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    .dash-body {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+
+    /* Stats */
+    .dash-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .dash-stat {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .dash-stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+
+    .dash-stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+    }
+
+    .dash-stat-value.new { color: var(--accent); }
+    .dash-stat-value.confirmed { color: var(--green); }
+    .dash-stat-value.cancelled { color: var(--red); }
+
+    /* Filter */
+    .dash-filters {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 8px 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-sec);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(212,168,83,0.08);
+    }
+
+    /* Bookings Table */
+    .bookings-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .bookings-table th {
+      text-align: left;
+      padding: 14px 16px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .bookings-table td {
+      padding: 14px 16px;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    .bookings-table tr:last-child td { border-bottom: none; }
+
+    .bookings-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+    .status-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .status-badge.new {
+      background: rgba(212,168,83,0.15);
+      color: var(--accent);
+    }
+
+    .status-badge.confirmed {
+      background: rgba(74,222,128,0.15);
+      color: var(--green);
+    }
+
+    .status-badge.cancelled {
+      background: rgba(248,113,113,0.15);
+      color: var(--red);
+    }
+
+    .status-badge.completed {
+      background: rgba(96,165,250,0.15);
+      color: var(--blue);
+    }
+
+    .action-btns {
+      display: flex;
+      gap: 6px;
+    }
+
+    .action-btn {
+      padding: 6px 10px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-sec);
+      border-radius: 6px;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      white-space: nowrap;
+    }
+
+    .action-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .action-btn.confirm:hover { border-color: var(--green); color: var(--green); }
+    .action-btn.cancel:hover { border-color: var(--red); color: var(--red); }
+    .action-btn.delete:hover { border-color: var(--red); color: var(--red); }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 24px;
+      color: var(--text-muted);
+    }
+
+    .empty-state i {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      opacity: 0.3;
+    }
+
+    .loading-state {
+      text-align: center;
+      padding: 60px;
+      color: var(--text-muted);
+    }
+
+    /* Booking Detail Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      max-width: 520px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .modal h2 {
+      font-size: 1.2rem;
+      margin-bottom: 24px;
+    }
+
+    .modal h2 span { color: var(--accent); }
+
+    .modal-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-row:last-of-type { border-bottom: none; }
+
+    .modal-label { color: var(--text-muted); font-size: 0.85rem; }
+    .modal-value { font-weight: 600; text-align: right; }
+
+    .modal-message {
+      margin-top: 16px;
+      padding: 14px;
+      background: var(--bg);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--text-sec);
+      line-height: 1.6;
+    }
+
+    .modal-close {
+      margin-top: 24px;
+      width: 100%;
+      padding: 12px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text-sec);
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .modal-close:hover { border-color: var(--accent); color: var(--accent); }
+
+    @media (max-width: 768px) {
+      .dash-stats { grid-template-columns: repeat(2, 1fr); }
+      .bookings-table { display: block; overflow-x: auto; }
+      .dash-header { padding: 12px 16px; }
+      .dash-body { padding: 20px 16px; }
+    }
+
+    @media (max-width: 480px) {
+      .dash-stats { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN -->
+  <div class="login-page" id="login-page">
+    <div class="login-card">
+      <h1>Yaktics <span>Admin</span></h1>
+      <p>Enter your admin password to view bookings</p>
+      <form id="login-form">
+        <input type="password" id="admin-password" placeholder="Admin Password" required autocomplete="current-password">
+        <button type="submit" class="login-btn">Sign In</button>
+      </form>
+      <div class="login-error" id="login-error">Invalid password. Please try again.</div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="dashboard" id="dashboard">
+    <header class="dash-header">
+      <h1><i class="fas fa-fish" style="color: var(--accent); margin-right: 8px;"></i>Yaktics <span>Admin</span></h1>
+      <div class="dash-header-actions">
+        <button class="dash-btn" onclick="loadBookings()"><i class="fas fa-sync-alt"></i> Refresh</button>
+        <button class="dash-btn danger" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+      </div>
+    </header>
+
+    <div class="dash-body">
+      <div class="dash-stats">
+        <div class="dash-stat">
+          <div class="dash-stat-label">Total Bookings</div>
+          <div class="dash-stat-value" id="stat-total">—</div>
+        </div>
+        <div class="dash-stat">
+          <div class="dash-stat-label">New Requests</div>
+          <div class="dash-stat-value new" id="stat-new">—</div>
+        </div>
+        <div class="dash-stat">
+          <div class="dash-stat-label">Confirmed</div>
+          <div class="dash-stat-value confirmed" id="stat-confirmed">—</div>
+        </div>
+        <div class="dash-stat">
+          <div class="dash-stat-label">Cancelled</div>
+          <div class="dash-stat-value cancelled" id="stat-cancelled">—</div>
+        </div>
+      </div>
+
+      <div class="dash-filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="new">New</button>
+        <button class="filter-btn" data-filter="confirmed">Confirmed</button>
+        <button class="filter-btn" data-filter="completed">Completed</button>
+        <button class="filter-btn" data-filter="cancelled">Cancelled</button>
+      </div>
+
+      <div id="bookings-container">
+        <div class="loading-state"><i class="fas fa-spinner fa-spin"></i> Loading bookings...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Detail Modal -->
+  <div class="modal-overlay" id="detail-modal">
+    <div class="modal">
+      <h2>Booking <span>Details</span></h2>
+      <div id="modal-content"></div>
+      <button class="modal-close" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <script>
+    let adminToken = '';
+    let allBookings = [];
+    let currentFilter = 'all';
+
+    // Login
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const password = document.getElementById('admin-password').value;
+      document.getElementById('login-error').style.display = 'none';
+
+      try {
+        const res = await fetch('/.netlify/functions/get-bookings', {
+          headers: { Authorization: `Bearer ${password}` },
+        });
+
+        if (res.ok) {
+          adminToken = password;
+          sessionStorage.setItem('yaktics_admin', password);
+          document.getElementById('login-page').style.display = 'none';
+          document.getElementById('dashboard').style.display = 'block';
+          allBookings = await res.json();
+          renderBookings();
+        } else {
+          document.getElementById('login-error').style.display = 'block';
+        }
+      } catch (err) {
+        document.getElementById('login-error').style.display = 'block';
+      }
+    });
+
+    // Auto-login from session
+    (async () => {
+      const saved = sessionStorage.getItem('yaktics_admin');
+      if (saved) {
+        try {
+          const res = await fetch('/.netlify/functions/get-bookings', {
+            headers: { Authorization: `Bearer ${saved}` },
+          });
+          if (res.ok) {
+            adminToken = saved;
+            document.getElementById('login-page').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            allBookings = await res.json();
+            renderBookings();
+          }
+        } catch {}
+      }
+    })();
+
+    function logout() {
+      sessionStorage.removeItem('yaktics_admin');
+      adminToken = '';
+      document.getElementById('dashboard').style.display = 'none';
+      document.getElementById('login-page').style.display = 'flex';
+      document.getElementById('admin-password').value = '';
+    }
+
+    async function loadBookings() {
+      try {
+        const res = await fetch('/.netlify/functions/get-bookings', {
+          headers: { Authorization: `Bearer ${adminToken}` },
+        });
+        if (res.ok) {
+          allBookings = await res.json();
+          renderBookings();
+        }
+      } catch (err) {
+        console.error('Failed to load bookings:', err);
+      }
+    }
+
+    function renderBookings() {
+      const filtered = currentFilter === 'all'
+        ? allBookings
+        : allBookings.filter(b => b.status === currentFilter);
+
+      // Stats
+      document.getElementById('stat-total').textContent = allBookings.length;
+      document.getElementById('stat-new').textContent = allBookings.filter(b => b.status === 'new').length;
+      document.getElementById('stat-confirmed').textContent = allBookings.filter(b => b.status === 'confirmed').length;
+      document.getElementById('stat-cancelled').textContent = allBookings.filter(b => b.status === 'cancelled').length;
+
+      const container = document.getElementById('bookings-container');
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-inbox"></i>
+            <p>No ${currentFilter === 'all' ? '' : currentFilter} bookings yet.</p>
+          </div>`;
+        return;
+      }
+
+      let html = `
+        <table class="bookings-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Name</th>
+              <th>Trip</th>
+              <th>Trip Date</th>
+              <th>Guests</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>`;
+
+      filtered.forEach(b => {
+        const created = new Date(b.createdAt).toLocaleDateString('en-US', {
+          month: 'short', day: 'numeric', year: 'numeric'
+        });
+        const tripDate = new Date(b.date + 'T00:00:00').toLocaleDateString('en-US', {
+          month: 'short', day: 'numeric', year: 'numeric'
+        });
+
+        html += `
+          <tr>
+            <td style="color: var(--text-muted); font-size: 0.8rem;">${created}</td>
+            <td>
+              <strong>${esc(b.name)}</strong><br>
+              <span style="font-size:0.8rem; color:var(--text-muted);">${esc(b.email)}</span>
+            </td>
+            <td>${esc(b.tripType)}</td>
+            <td><strong>${tripDate}</strong></td>
+            <td>${b.guests}</td>
+            <td><span class="status-badge ${b.status}">${b.status}</span></td>
+            <td>
+              <div class="action-btns">
+                <button class="action-btn" onclick="viewBooking('${b.id}')"><i class="fas fa-eye"></i></button>
+                ${b.status === 'new' ? `<button class="action-btn confirm" onclick="updateStatus('${b.id}','confirmed')"><i class="fas fa-check"></i></button>` : ''}
+                ${b.status === 'confirmed' ? `<button class="action-btn" onclick="updateStatus('${b.id}','completed')" style="color:var(--blue)"><i class="fas fa-flag-checkered"></i></button>` : ''}
+                ${b.status !== 'cancelled' ? `<button class="action-btn cancel" onclick="updateStatus('${b.id}','cancelled')"><i class="fas fa-times"></i></button>` : ''}
+                <button class="action-btn delete" onclick="deleteBooking('${b.id}')"><i class="fas fa-trash"></i></button>
+              </div>
+            </td>
+          </tr>`;
+      });
+
+      html += '</tbody></table>';
+      container.innerHTML = html;
+    }
+
+    // Filters
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        renderBookings();
+      });
+    });
+
+    function viewBooking(id) {
+      const b = allBookings.find(x => x.id === id);
+      if (!b) return;
+
+      const created = new Date(b.createdAt).toLocaleString();
+      const tripDate = new Date(b.date + 'T00:00:00').toLocaleDateString('en-US', {
+        weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'
+      });
+
+      let html = `
+        <div class="modal-row"><span class="modal-label">Name</span><span class="modal-value">${esc(b.name)}</span></div>
+        <div class="modal-row"><span class="modal-label">Email</span><span class="modal-value"><a href="mailto:${esc(b.email)}" style="color:var(--accent)">${esc(b.email)}</a></span></div>
+        <div class="modal-row"><span class="modal-label">Phone</span><span class="modal-value"><a href="tel:${esc(b.phone)}" style="color:var(--accent)">${esc(b.phone)}</a></span></div>
+        <div class="modal-row"><span class="modal-label">Trip</span><span class="modal-value">${esc(b.tripType)}</span></div>
+        <div class="modal-row"><span class="modal-label">Trip Date</span><span class="modal-value">${tripDate}</span></div>
+        <div class="modal-row"><span class="modal-label">Guests</span><span class="modal-value">${b.guests}</span></div>
+        <div class="modal-row"><span class="modal-label">Status</span><span class="modal-value"><span class="status-badge ${b.status}">${b.status}</span></span></div>
+        <div class="modal-row"><span class="modal-label">Submitted</span><span class="modal-value" style="font-size:0.85rem">${created}</span></div>
+      `;
+
+      if (b.message) {
+        html += `<div class="modal-message"><strong style="color:var(--text);display:block;margin-bottom:6px">Special Requests:</strong>${esc(b.message)}</div>`;
+      }
+
+      document.getElementById('modal-content').innerHTML = html;
+      document.getElementById('detail-modal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('detail-modal').classList.remove('active');
+    }
+
+    document.getElementById('detail-modal').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) closeModal();
+    });
+
+    async function updateStatus(id, status) {
+      try {
+        const res = await fetch('/.netlify/functions/update-booking', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${adminToken}`,
+          },
+          body: JSON.stringify({ id, status }),
+        });
+
+        if (res.ok) {
+          const booking = allBookings.find(b => b.id === id);
+          if (booking) booking.status = status;
+          renderBookings();
+        }
+      } catch (err) {
+        console.error('Update failed:', err);
+      }
+    }
+
+    async function deleteBooking(id) {
+      if (!confirm('Delete this booking? This cannot be undone.')) return;
+
+      try {
+        const res = await fetch('/.netlify/functions/delete-booking', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${adminToken}`,
+          },
+          body: JSON.stringify({ id }),
+        });
+
+        if (res.ok) {
+          allBookings = allBookings.filter(b => b.id !== id);
+          renderBookings();
+        }
+      } catch (err) {
+        console.error('Delete failed:', err);
+      }
+    }
+
+    function esc(str) {
+      const div = document.createElement('div');
+      div.textContent = str || '';
+      return div.innerHTML;
+    }
+  </script>
+</body>
+</html>

@@ -288,4 +288,73 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   window.addEventListener('scroll', setActiveNav);
+
+  // ==========================================
+  // BOOKING FORM
+  // ==========================================
+  const bookingForm = document.getElementById('booking-form');
+  if (bookingForm) {
+    // Set min date to today
+    const dateInput = document.getElementById('book-date');
+    if (dateInput) {
+      const today = new Date().toISOString().split('T')[0];
+      dateInput.setAttribute('min', today);
+    }
+
+    bookingForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const submitBtn = document.getElementById('booking-submit');
+      const btnText = submitBtn.querySelector('.btn-text');
+      const btnLoading = submitBtn.querySelector('.btn-loading');
+      const successMsg = document.getElementById('booking-success');
+      const errorMsg = document.getElementById('booking-error');
+
+      // Reset messages
+      successMsg.style.display = 'none';
+      errorMsg.style.display = 'none';
+
+      // Loading state
+      submitBtn.disabled = true;
+      btnText.style.display = 'none';
+      btnLoading.style.display = 'inline';
+
+      const data = {
+        name: document.getElementById('book-name').value.trim(),
+        email: document.getElementById('book-email').value.trim(),
+        phone: document.getElementById('book-phone').value.trim(),
+        tripType: document.getElementById('book-trip').value,
+        date: document.getElementById('book-date').value,
+        guests: document.getElementById('book-guests').value,
+        message: document.getElementById('book-message').value.trim(),
+      };
+
+      try {
+        const res = await fetch('/.netlify/functions/submit-booking', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+
+        const result = await res.json();
+
+        if (res.ok && result.success) {
+          successMsg.style.display = 'flex';
+          bookingForm.reset();
+        } else {
+          document.getElementById('booking-error-text').textContent =
+            result.error || 'Something went wrong. Please call (251) 272-9834.';
+          errorMsg.style.display = 'flex';
+        }
+      } catch (err) {
+        document.getElementById('booking-error-text').textContent =
+          'Network error. Please call us at (251) 272-9834.';
+        errorMsg.style.display = 'flex';
+      } finally {
+        submitBtn.disabled = false;
+        btnText.style.display = 'inline';
+        btnLoading.style.display = 'none';
+      }
+    });
+  }
 });

@@ -619,36 +619,102 @@
       <div class="booking-overlay"></div>
     </div>
     <div class="container">
-      <div class="booking-content" data-animate="fade-up">
-        <span class="section-tag light">Ready to Fish?</span>
-        <h2>Book Your <span class="accent">Adventure</span></h2>
-        <p>Choose your trip, pick your date, and get on the water. Contact Captain Reno to reserve your spot today.</p>
-        <div class="booking-methods">
-          <a href="tel:2512729834" class="booking-method">
-            <div class="method-icon"><i class="fas fa-phone"></i></div>
-            <div class="method-info">
-              <strong>Call to Book</strong>
-              <span>(251) 272-9834</span>
-            </div>
-          </a>
-          <a href="mailto:reno@yaktics.com" class="booking-method">
-            <div class="method-icon"><i class="fas fa-envelope"></i></div>
-            <div class="method-info">
-              <strong>Email to Book</strong>
-              <span>reno@yaktics.com</span>
-            </div>
-          </a>
-        </div>
-        <div class="payment-methods">
-          <span>We Accept:</span>
-          <div class="payment-icons">
-            <i class="fab fa-cc-visa"></i>
-            <i class="fab fa-cc-mastercard"></i>
-            <i class="fab fa-cc-amex"></i>
-            <i class="fab fa-cc-discover"></i>
-            <i class="fab fa-cc-apple-pay"></i>
-            <i class="fab fa-google-pay"></i>
+      <div class="booking-layout" data-animate="fade-up">
+        <div class="booking-info">
+          <span class="section-tag light">Ready to Fish?</span>
+          <h2>Book Your <span class="accent">Adventure</span></h2>
+          <p>Fill out the form and Captain Reno will confirm your trip within 24 hours. Or reach out directly.</p>
+          <div class="booking-methods">
+            <a href="tel:2512729834" class="booking-method">
+              <div class="method-icon"><i class="fas fa-phone"></i></div>
+              <div class="method-info">
+                <strong>Call to Book</strong>
+                <span>(251) 272-9834</span>
+              </div>
+            </a>
+            <a href="mailto:reno@yaktics.com" class="booking-method">
+              <div class="method-icon"><i class="fas fa-envelope"></i></div>
+              <div class="method-info">
+                <strong>Email to Book</strong>
+                <span>reno@yaktics.com</span>
+              </div>
+            </a>
           </div>
+          <div class="payment-methods">
+            <span>We Accept:</span>
+            <div class="payment-icons">
+              <i class="fab fa-cc-visa"></i>
+              <i class="fab fa-cc-mastercard"></i>
+              <i class="fab fa-cc-amex"></i>
+              <i class="fab fa-cc-discover"></i>
+              <i class="fab fa-cc-apple-pay"></i>
+              <i class="fab fa-google-pay"></i>
+            </div>
+          </div>
+        </div>
+        <div class="booking-form-wrapper">
+          <form id="booking-form" class="booking-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="book-name">Full Name *</label>
+                <input type="text" id="book-name" name="name" required placeholder="John Smith">
+              </div>
+              <div class="form-group">
+                <label for="book-phone">Phone *</label>
+                <input type="tel" id="book-phone" name="phone" required placeholder="(555) 123-4567">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="book-email">Email *</label>
+              <input type="email" id="book-email" name="email" required placeholder="john@example.com">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="book-trip">Trip Type *</label>
+                <select id="book-trip" name="tripType" required>
+                  <option value="" disabled selected>Select a trip...</option>
+                  <option value="Speckled Trout — $125">Speckled Trout — $125</option>
+                  <option value="Redfish — $125">Redfish — $125</option>
+                  <option value="Sheepshead — $150">Sheepshead — $150</option>
+                  <option value="Offshore Snapper — $200">Offshore Snapper — $200</option>
+                  <option value="Night Light Fishing — $150">Night Light Fishing — $150</option>
+                  <option value="Flounder Pounder — $125">Flounder Pounder — $125</option>
+                  <option value="Dauphin Island Scenic Tour — $80">Dauphin Island Scenic Tour — $80</option>
+                  <option value="Battleship Scenic Tour — $80">Battleship Scenic Tour — $80</option>
+                  <option value="Guide Service BYOK — $150">Guide Service (BYOK) — $150</option>
+                  <option value="Single Kayak Rental — $80">Single Kayak Rental — $80</option>
+                  <option value="Double Kayak Rental — $160">Double Kayak Rental (x2) — $160</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="book-guests">Guests</label>
+                <select id="book-guests" name="guests">
+                  <option value="1">1 Guest</option>
+                  <option value="2">2 Guests</option>
+                  <option value="3">3 Guests</option>
+                  <option value="4">4+ Guests</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="book-date">Preferred Date *</label>
+              <input type="date" id="book-date" name="date" required>
+            </div>
+            <div class="form-group">
+              <label for="book-message">Special Requests</label>
+              <textarea id="book-message" name="message" rows="3" placeholder="Any questions, experience level, or special requests..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-submit" id="booking-submit">
+              <span class="btn-text"><i class="fas fa-calendar-check"></i> Submit Booking Request</span>
+              <span class="btn-loading" style="display:none"><i class="fas fa-spinner fa-spin"></i> Sending...</span>
+            </button>
+            <div id="booking-success" class="form-message success" style="display:none">
+              <i class="fas fa-check-circle"></i> Booking request sent! Captain Reno will confirm within 24 hours. Check your email for a confirmation.
+            </div>
+            <div id="booking-error" class="form-message error" style="display:none">
+              <i class="fas fa-exclamation-circle"></i> <span id="booking-error-text">Something went wrong.</span>
+            </div>
+          </form>
         </div>
       </div>
     </div>

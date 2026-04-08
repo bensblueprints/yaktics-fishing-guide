@@ -1,0 +1,8 @@
+{
+  "name": "yaktics-fishing-guide",
+  "private": true,
+  "dependencies": {
+    "resend": "^4.0.0",
+    "@netlify/blobs": "^8.1.0"
+  }
+}
